@@ -41,8 +41,8 @@ public class Student implements Comparable <Student>  {
         }
 
         System.out.println();
-
-        HashSet<Student> hashSet= new HashSet<>();
+        //int indexForRemove=1;
+        Set<Student> hashSet= new HashSet<>();
         hashSet.add(new Student("Vlad",58));
         hashSet.add(new Student("Masha", 17));
         hashSet.add(new Student("Nick",29));
@@ -52,17 +52,17 @@ public class Student implements Comparable <Student>  {
             System.out.println("Student Hash Name:"+ student.getName()+ "," +" Sdudent Hash Age:"+ student.getAge());
         }
         //hashSet.remove(new Student("Nick", 29));
-        hashSet.remove(2);
+        hashSet.remove(0);
         System.out.println("Кто-то пропал)");
-        hashSet.remove(new Student("Nick",29));
-       // boolean isRemoved = hashSet.remove(1);
+        //hashSet.remove(new Student("Nick",29));
+        boolean isRemoved = hashSet.remove(1);
         for (Student student: hashSet )
         {
             System.out.println("Student Hash Name:"+ student.getName()+ "," +" Sdudent Hash Age:"+ student.getAge());
         }
         System.out.println();
 
-        LinkedHashSet<Student> students1 = new LinkedHashSet<>();
+        Set<Student> students1 = new LinkedHashSet<>();
         students1.add(new Student("Sofia",51));
         students1.add(new Student("Oleg", 25));
         students1.add(new Student("Vania",32));
@@ -70,7 +70,8 @@ public class Student implements Comparable <Student>  {
         {
             System.out.println("Linked Hash Set Student:"+ student.getName()+ ","+ " Linked Hash Set Student Age:"+ student.getAge());
         }
-        students1.remove(new Student("Vania", 32));
+        //students1.remove(new Student("Vania", 32));
+        students1.remove(1);
         System.out.println("Кто-то пропал)");
         for (Student student: students1 )
         {
@@ -78,7 +79,8 @@ public class Student implements Comparable <Student>  {
         }
         System.out.println();
 
-        Set<Student> studentTreeSet = new TreeSet<>(); // (s1,s2)->s1.getName().compareTo(s2.getName())
+        Comparator<Student> studentComparator= new StudentComparator();
+        TreeSet<Student> studentTreeSet = new TreeSet<>(studentComparator); // (s1,s2)->s1.getName().compareTo(s2.getName())
         studentTreeSet.add(new Student("Gorgic",54));
         studentTreeSet.add(new Student("Olesia", 26));
         studentTreeSet.add(new Student("Margo",28));
@@ -86,8 +88,9 @@ public class Student implements Comparable <Student>  {
         {
             System.out.println("Student Tree Set Name:"+ student.getName()+ ","+ " Student Tree Set Age:"+ student.getAge());
         }
-        studentTreeSet.remove(2);
         System.out.println("Кто-то пропал)");
+        //studentTreeSet.remove(2);
+        studentTreeSet.remove(studentTreeSet.toArray()[2]);
         for (Student student: studentTreeSet )
         {
             System.out.println("Name:"+ student.getName()+ " Age:"+ student.getAge());
@@ -112,13 +115,31 @@ public class Student implements Comparable <Student>  {
         }
     }
     @Override
+    public String toString ()
+    {
+        return "Student{"+
+                "name="+ name+ '\''+
+                "age=" + age+ '}';
+    }
+    @Override
     public int compareTo (Student stu)
     {
-        return this.age - stu.age;
+        return this.name.compareTo(stu.name);
+        //return stu.name-stu2.age;
+    }
+
+    @Override
+    public boolean equals (Object o)
+    {
+        if (this == o) return true;
+        if (o==null || getClass() != o.getClass()) return false;
+        Student student= (Student) o;
+        return name == student.name && Objects.equals (age, student.age);
     }
     @Override
     public int hashCode ()
     {
-        return 31*name.hashCode()+age;
+        return Objects.hash(name,age);
     }
+
 }
