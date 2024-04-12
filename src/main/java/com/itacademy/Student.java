@@ -53,6 +53,7 @@ public class Student implements Comparable <Student>  {
         }
         //hashSet.remove(new Student("Nick", 29));
         hashSet.remove(0);
+        hashSet.remove(hashSet.toArray()[1]);
         System.out.println("Кто-то пропал)");
         //hashSet.remove(new Student("Nick",29));
         boolean isRemoved = hashSet.remove(1);
@@ -72,6 +73,7 @@ public class Student implements Comparable <Student>  {
         }
         //students1.remove(new Student("Vania", 32));
         students1.remove(1);
+        students1.remove(students1.toArray()[2]);
         System.out.println("Кто-то пропал)");
         for (Student student: students1 )
         {
